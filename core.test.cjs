@@ -1,4 +1,4 @@
-const {test}=require('node:test');const assert=require('node:assert/strict');const C=require('../dist/core.js');
+const {test}=require('node:test');const assert=require('node:assert/strict');const C=require('./core.js');
 const invoice={client:'Studio',number:'INV-1',amount:100,paid:25,currency:'USD',due:'2026-01-01',blocker:'Unknown'};
 test('partial payments reduce outstanding balance',()=>{assert.equal(C.balance(invoice),75);assert.equal(C.balance({...invoice,paid:100}),0);assert.equal(C.status({...invoice,paid:100}),'Paid');});
 test('invalid financial data is rejected',()=>{for(const change of [{paid:-1},{paid:101},{amount:NaN},{amount:0},{due:'2026-02-30'},{currency:'XYZ'},{promise:'tomorrow'}])assert.throws(()=>C.validate({...invoice,...change}));});
