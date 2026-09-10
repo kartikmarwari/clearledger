@@ -6,6 +6,7 @@ alter table public.invoices add column if not exists next_follow_up_at timestamp
 alter table public.invoices add column if not exists reminder_enabled boolean not null default false;
 alter table public.invoices add column if not exists reminder_status text not null default 'idle';
 alter table public.invoices add column if not exists last_reminder_at timestamptz;
+alter table public.invoices add column if not exists reminder_locked_at timestamptz;
 alter table public.invoices drop constraint if exists invoices_owner_email_check;
 alter table public.invoices add constraint invoices_owner_email_check check(length(owner_email)<=200);
 alter table public.invoices drop constraint if exists invoices_reminder_status_check;
